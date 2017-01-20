@@ -1,3 +1,6 @@
+jonathan.ferrer@upf.edu
+enviar mail
+
 # Artificial-Intelligence-UPF
 
 http://inst.eecs.berkeley.edu/~cs188/pacman/search.html
