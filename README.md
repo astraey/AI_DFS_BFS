@@ -61,3 +61,6 @@ que problemas encontramos
 breu resposa a les preguntes que fan a ala web
 
 entrega dijous 2 febrer  23:55
+
+
+VIP USAR Pila, cua y cua prioritat
