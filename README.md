@@ -7,6 +7,17 @@ compilador: pycharm community edition
 - Depth-First Search: 
 Usa un Stack. Expande lo mas profunfo posible primero
 
+pseudocodigo dfs:
+1  procedure DFS-iterative(G,v):
+2      let S be a stack
+3      S.push(v)
+4      while S is not empty
+5          v = S.pop()
+6          if v is not labeled as discovered:
+7              label v as discovered
+8              for all edges from v to w in G.adjacentEdges(v) do
+9                  S.push(w)
+
 - Breathe-First Search
 Usa una Cola
 
@@ -67,3 +78,5 @@ VIP USAR Pila, cua y cua prioritat
 
 un nodo tiene el estado el coste la accion y el nodo padre
 un estado tiene la posicion
+
+->>linux si es cau xord editar linia 217 de graphicUtils.py 
