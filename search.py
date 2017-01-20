@@ -79,7 +79,7 @@ def depthFirstSearch(problem):
     w = Directions.WEST
     n = Directions.NORTH
 
-    """AQUI SE HACE TODO"""
+    """AQUI SE HACE TODO EL PRIMER EJERCICIO"""
 
     """
     Search the deepest nodes in the search tree first.
@@ -99,6 +99,13 @@ def depthFirstSearch(problem):
     print "Start:", problem.getStartState()
     print "Is the start a goal?", problem.isGoalState(problem.getStartState())
     print "Start's successors:", problem.getSuccessors(problem.getStartState())
+
+    current_state = problem.getStartState
+    """while not problem.isGoalState(current_state):
+        print "Still looking for a solution"
+        expanded_nodes = problem.getSuccessors(current_state)
+        print current_state
+        print expanded_nodes"""
 
     return [s, n, s]
     #util.raiseNotDefined()
