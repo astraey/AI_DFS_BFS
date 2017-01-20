@@ -1,11 +1,11 @@
 # Artificial-Intelligence-UPF
 
+http://inst.eecs.berkeley.edu/~cs188/pacman/search.html
+
+compilador: pycharm community edition
 
 - Depth-First Search: 
 Usa un Stack. Expande lo mas profunfo posible primero
-http://inst.eecs.berkeley.edu/~cs188/pacman/search.html
-
-
 
 - Breathe-First Search
 Usa una Cola
@@ -64,3 +64,6 @@ entrega dijous 2 febrer  23:55
 
 
 VIP USAR Pila, cua y cua prioritat
+
+un nodo tiene el estado el coste la accion y el nodo padre
+un estado tiene la posicion
