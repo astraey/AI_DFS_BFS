@@ -3,6 +3,9 @@
 
 - Depth-First Search: 
 Usa un Stack. Expande lo mas profunfo posible primero
+http://inst.eecs.berkeley.edu/~cs188/pacman/search.html
+
+
 
 - Breathe-First Search
 Usa una Cola
@@ -22,3 +25,39 @@ Si empata con la heurística, se pilla directamente.
 -Habiendo implementado A*, como sacamos uniform cost? lo mismo pero sin la heurística.
 
 Para no volver a expandir un nodo, se puede guardar el elemento en una lista de nodos ya expandidos. La cosa va asi: Si pillamos un nodo y no lo hemos visitado y no es goal, lo expandimos. Adems, lo ponemos en un a lista de nodos ya expandidos para no volverlo a expandir. (Si, solo para el DFS, BFS). Esto no se hace con el uniform Cost y el A* porque nos interesa saber si para llegar a un nodo se puede llegar por 2 caminos.
+
+
+Adimisble heuristic:
+la heuristica que utilitzem te que ser igual o menor que la heuristica optima
+h <= h* (h* => heuristica optima)
+
+Heuristica consistent:
+
+cost per arribar de un node n a un node n' (siguen n' el seu fill) + heurisitca de n' <= heuristica node pare.
+
+Heuristica no trivial:
+
+no 0 -> no serveix de re
+heuristica que computi el cost total -> petara en temps.+
+
+
+fer exercicis 1 a 6
+7 i 8 opcionals (15% mes de nota)
+
+
+entrega:
+grups de 2
+no copiar plz
+
+entregar en un zip o tar formato P1_NIA1_NIA2
+debe contener:
+search.py
+searchAgents.py
+
+hay que indicar en la entrega:
+que funciona 
+que no funciona 
+que problemas encontramos
+breu resposa a les preguntes que fan a ala web
+
+entrega dijous 2 febrer  23:55
