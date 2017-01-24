@@ -79,7 +79,7 @@ def depthFirstSearch(problem):
     w = Directions.WEST
     n = Directions.NORTH
 
-    """AQUI SE HACE TODO EL PRIMER EJERCICIO"""
+    """AQUI SE HACE TODO EL PRIMER EJERCICIO, recordar que hay que usar stack"""
 
     """
     Search the deepest nodes in the search tree first.
@@ -94,21 +94,48 @@ def depthFirstSearch(problem):
     print "Is the start a goal?", problem.isGoalState(problem.getStartState())
     print "Start's successors:", problem.getSuccessors(problem.getStartState())
     """
-    "*** YOUR CODE HERE ***"
+    "*** OUR CODE IS HERE ***"
 
-    print "Start:", problem.getStartState()
-    print "Is the start a goal?", problem.isGoalState(problem.getStartState())
-    print "Start's successors:", problem.getSuccessors(problem.getStartState())
+    stack = util.Stack()
+    visited_nodes = []
+    route = []
 
-    current_state = problem.getStartState
-    """while not problem.isGoalState(current_state):
-        print "Still looking for a solution"
-        expanded_nodes = problem.getSuccessors(current_state)
-        print current_state
-        print expanded_nodes"""
+    stack.push(problem.getStartState())
 
-    return [s, n, s]
-    #util.raiseNotDefined()
+    while not stack.isEmpty():
+        node = stack.pop()
+        if not node in visited_nodes:
+            visited_nodes.append(node)
+            succesors = problem.getSuccessors(node)
+            print "Node Expanded Here"
+            for i in range (0, len(succesors)):
+                stack.push(succesors[i][0])
+                print "Objective: ", problem.isGoalState(succesors[i][0])
+                print "State Pushed"
+                route.append(compassAdapter(succesors[i][0]))
+
+    return route
+
+def compassAdapter(direction):
+
+    from game import Directions
+    n = Directions.NORTH
+    s = Directions.SOUTH
+    e = Directions.EAST
+    w = Directions.WEST
+
+    if direction is "North":
+        return n
+
+    if direction is "South":
+        return s
+
+    if direction is "East":
+        return e
+
+    if direction is "West":
+        return w
+
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
