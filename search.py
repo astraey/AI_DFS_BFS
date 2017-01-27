@@ -101,18 +101,23 @@ def depthFirstSearch(problem):
     route = []
 
     stack.push(problem.getStartState())
+    final = False
+    while not stack.isEmpty() and not final:
 
-    while not stack.isEmpty():
         node = stack.pop()
-        if not node in visited_nodes:
+        if not node in visited_nodes and not final:
             visited_nodes.append(node)
             succesors = problem.getSuccessors(node)
             print "Node Expanded Here"
             for i in range (0, len(succesors)):
                 stack.push(succesors[i][0])
+                if (problem.isGoalState(succesors[i][0])):
+                    final = True
                 print "Objective: ", problem.isGoalState(succesors[i][0])
+                print "Succesors ", succesors[i]
+                print "direccion ", compassAdapter(succesors[i][1])
                 print "State Pushed"
-                route.append(compassAdapter(succesors[i][0]))
+                route.append(compassAdapter(succesors[i][1]))
 
     return route
 
