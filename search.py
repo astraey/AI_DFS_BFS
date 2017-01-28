@@ -74,10 +74,6 @@ def tinyMazeSearch(problem):
 
 def depthFirstSearch(problem):
 
-    from game import Directions
-    s = Directions.SOUTH
-    w = Directions.WEST
-    n = Directions.NORTH
 
     """AQUI SE HACE TODO EL PRIMER EJERCICIO, recordar que hay que usar stack"""
 
@@ -96,50 +92,44 @@ def depthFirstSearch(problem):
     """
     "*** OUR CODE IS HERE ***"
 
-    stack = util.Stack()
-    visited_nodes = []
-    route = []
 
-    stack.push(problem.getStartState())
-    final = False
-    while not stack.isEmpty() and not final:
+    frontier = util.Stack()
+    explored = []
+    frontier.push([(problem.getStartState(), "Stop", 0)])
 
-        node = stack.pop()
-        if not node in visited_nodes and not final:
-            visited_nodes.append(node)
-            succesors = problem.getSuccessors(node)
-            print "Node Expanded Here"
-            for i in range (0, len(succesors)):
-                stack.push(succesors[i][0])
-                if (problem.isGoalState(succesors[i][0])):
-                    final = True
-                print "Objective: ", problem.isGoalState(succesors[i][0])
-                print "Succesors ", succesors[i]
-                print "direccion ", compassAdapter(succesors[i][1])
-                print "State Pushed"
-                route.append(compassAdapter(succesors[i][1]))
+    while not frontier.isEmpty():
+        # print "frontier: ", frontier.heap
+        path = frontier.pop()
+        print "path len: ", len(path)
+        print "path: ", path
 
-    return route
+        top_stack_node = path[len(path) - 1]
+        top_stack_node = top_stack_node[0]
+        print "top_stack_node: ", top_stack_node
+        if problem.isGoalState(top_stack_node):
+            # print "FOUND SOLUTION: ", [x[1] for x in path]
+            return [x[1] for x in path][1:]
 
-def compassAdapter(direction):
+        if top_stack_node not in explored:
+            explored.append(top_stack_node)
+            print "EXPLORING: ", top_stack_node
 
-    from game import Directions
-    n = Directions.NORTH
-    s = Directions.SOUTH
-    e = Directions.EAST
-    w = Directions.WEST
+            for successor in problem.getSuccessors(top_stack_node):
+                # print "SUCCESSOR: ", successor
+                if successor[0] not in explored:
+                    successorPath = path[:]
+                    #print "SuccesorPath: ", successorPath
+                    successorPath.append(successor)
+                    #print "SuccesorPAth after: ", successorPath
+                    # print "successorPath: ", successorPath
+                    frontier.push(successorPath)
+                    # else:
+                    # print successor[0], " IS ALREADY EXPLORED!!"
+        print "***************************************"
 
-    if direction is "North":
-        return n
+    return []
 
-    if direction is "South":
-        return s
 
-    if direction is "East":
-        return e
-
-    if direction is "West":
-        return w
 
 
 def breadthFirstSearch(problem):
