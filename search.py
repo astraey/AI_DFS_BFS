@@ -91,46 +91,53 @@ def depthFirstSearch(problem):
     print "Start's successors:", problem.getSuccessors(problem.getStartState())
     """
     "*** OUR CODE IS HERE ***"
+    "Use The following to execute DFS"
+    "python pacman.py -l tinyMaze -p SearchAgent"
 
+    stack = util.Stack()
+    closed = []
+    stack.push([(problem.getStartState(), "Start", 1)])
 
-    frontier = util.Stack()
-    explored = []
-    frontier.push([(problem.getStartState(), "Stop", 0)])
+    while not stack.isEmpty():
 
-    while not frontier.isEmpty():
-        # print "frontier: ", frontier.heap
-        path = frontier.pop()
+        # In the top of the stack, we have stored the whole queue of nodes we have gone through.
+        # There is nothing else in the stack.
+        # In path, we find the whole way that we have gone through.
+        path = stack.pop()
+
         print "path len: ", len(path)
         print "path: ", path
 
+        # In top_stack_node we store the last node stored in path
         top_stack_node = path[len(path) - 1]
-        top_stack_node = top_stack_node[0]
-        print "top_stack_node: ", top_stack_node
-        if problem.isGoalState(top_stack_node):
+
+        # In top_stack_state we store the state (x,y) of the last node stored in path
+        top_stack_state = top_stack_node[0]
+        print "top_stack_node: ", top_stack_state
+        if problem.isGoalState(top_stack_state):
             # print "FOUND SOLUTION: ", [x[1] for x in path]
             return [x[1] for x in path][1:]
 
-        if top_stack_node not in explored:
-            explored.append(top_stack_node)
-            print "EXPLORING: ", top_stack_node
+        if top_stack_state not in closed:
+            closed.append(top_stack_state)
+            print "EXPLORING: ", top_stack_state
 
-            for successor in problem.getSuccessors(top_stack_node):
+            for successor in problem.getSuccessors(top_stack_state):
                 # print "SUCCESSOR: ", successor
-                if successor[0] not in explored:
+                if successor[0] not in closed:
+
+                    # It copies the content of path in successorPath, not a reference
                     successorPath = path[:]
-                    #print "SuccesorPath: ", successorPath
+                    print "SuccesorPath: ", successorPath
                     successorPath.append(successor)
-                    #print "SuccesorPAth after: ", successorPath
+                    print "SuccesorPAth after: ", successorPath
                     # print "successorPath: ", successorPath
-                    frontier.push(successorPath)
+                    stack.push(successorPath)
                     # else:
                     # print successor[0], " IS ALREADY EXPLORED!!"
         print "***************************************"
 
     return []
-
-
-
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
