@@ -72,8 +72,13 @@ def tinyMazeSearch(problem):
     w = Directions.WEST
     return  [s, s, w, s, w, w, s, w]
 
-def depthFirstSearch(problem):
+def depthFirstSearch(problem,):
 
+    from game import Directions
+    s = Directions.SOUTH
+    w = Directions.WEST
+    n = Directions.NORTH
+    e = Directions.EAST
 
     """AQUI SE HACE TODO EL PRIMER EJERCICIO, recordar que hay que usar stack"""
 
@@ -92,44 +97,144 @@ def depthFirstSearch(problem):
     """
     "*** OUR CODE IS HERE ***"
 
+    stack = util.Stack()
+    w, h = 5, 5
+    padres = [[0 for x in range(w)] for y in range(h)]
 
-    frontier = util.Stack()
-    explored = []
-    frontier.push([(problem.getStartState(), "Stop", 0)])
+    visited = []
 
-    while not frontier.isEmpty():
-        # print "frontier: ", frontier.heap
-        path = frontier.pop()
-        print "path len: ", len(path)
-        print "path: ", path
 
-        top_stack_node = path[len(path) - 1]
-        top_stack_node = top_stack_node[0]
-        print "top_stack_node: ", top_stack_node
-        if problem.isGoalState(top_stack_node):
-            # print "FOUND SOLUTION: ", [x[1] for x in path]
-            return [x[1] for x in path][1:]
+    stack.push(problem.getStartState())
 
-        if top_stack_node not in explored:
-            explored.append(top_stack_node)
-            print "EXPLORING: ", top_stack_node
+    while not stack.isEmpty():
 
-            for successor in problem.getSuccessors(top_stack_node):
-                # print "SUCCESSOR: ", successor
-                if successor[0] not in explored:
-                    successorPath = path[:]
-                    #print "SuccesorPath: ", successorPath
-                    successorPath.append(successor)
-                    #print "SuccesorPAth after: ", successorPath
-                    # print "successorPath: ", successorPath
-                    frontier.push(successorPath)
-                    # else:
-                    # print successor[0], " IS ALREADY EXPLORED!!"
-        print "***************************************"
+        # estado, accion
+        estado = stack.pop()
+
+
+        if not estado in visited:
+            visited.append(estado)
+            succesors = problem.getSuccessors(estado)
+            print "Node Expanded Here"
+            for i in range(0, len(succesors)):
+                print "Objective: ", problem.isGoalState(succesors[i][0])
+                print "Succesors ", succesors[i]
+                print "direccion ", compassAdapter(succesors[i][1])
+                print "State Pushed"
+
+                stack.push(succesors[i][0])
+                x,y = succesors[i][0]
+                if not succesors[i][0] in visited: padres[x-1][y-1] = compassAdapter(succesors[i][1])
+
+                """if padres[x-1][y-1] == "North":
+                    padres[x-1][y-1] = "South"
+                elif padres[x - 1][y - 1] == "South":
+                    padres[x - 1][y - 1] = "North"
+                elif padres[x - 1][y - 1] == "East":
+                    padres[x - 1][y - 1] = "West"
+                elif padres[x - 1][y - 1] == "West":
+                    padres[x - 1][y - 1] = "East"
+                """
+                if (problem.isGoalState(succesors[i][0])):
+                    result = []
+                    x1, y1 = succesors[i][0]
+                    state = x1, y1
+
+                    for i in range(0, 5):
+                        for j in range(0, 5):
+                            if padres[i][j] == 0:
+                                padres[i][j] = "nope"
+                    print padres[4][0] + " " + padres[4][1] + " " + padres[4][2] + " " + padres[4][3] + " " + padres[4][
+                        4]
+                    print padres[3][0] + " " + padres[3][1] + " " + padres[3][2] + " " + padres[3][3] + " " + \
+                          padres[3][4]
+                    print padres[2][0] + " " + padres[2][1] + " " + padres[2][2] + " " + padres[2][3] + " " + \
+                          padres[2][4]
+                    print padres[1][0] + " " + padres[1][1] + " " + padres[1][2] + " " + padres[1][3] + " " + \
+                          padres[1][4]
+                    print padres[0][0] + " " + padres[0][1] + " " + padres[0][2] + " " + padres[0][3] + " " + \
+                          padres[0][4]
+
+
+                    #padres[0][0] = "West"
+                    #padres[0][1] = "South"
+                    #padres[1][1] = "South"
+                    #padres[2][1] = "East"
+                    #padres[2][0] = "South"
+                    #padres[3][0] = "South"
+                    #padres[4][0] = "West"
+                    #padres[4][1] = "West"
+                    #padres[4][2] = "West"
+                    #padres[4][3] = "West"
+
+
+                    while state != problem.getStartState():
+                        for i in range(0, 5):
+                            for j in range (0, 5):
+                                if padres[i][j] == 0:
+                                    padres[i][j] = "nope"
+                        """
+                        print padres[4][0] + " " + padres[4][1] + " " + padres[4][2] + " "+ padres[4][3] + " " + padres[4][4]
+                        print padres[3][0] + " " + padres[3][1] + " " + padres[3][2] + " " + padres[3][3] + " " + \
+                              padres[3][4]
+                        print padres[2][0] + " " + padres[2][1] + " " + padres[2][2] + " " + padres[2][3] + " " + \
+                              padres[2][4]
+                        print padres[1][0] + " " + padres[1][1] + " " + padres[1][2] + " " + padres[1][3] + " " + \
+                              padres[1][4]
+                        print padres[0][0] + " " + padres[0][1] + " " + padres[0][2] + " " + padres[0][3] + " " + \
+                              padres[0][4]
+                        print " "
+                        print "inical:"
+                        print problem.getStartState()
+                        """
+                        state = x1, y1
+                        """
+                        print "state"
+                        print state
+                        print "situacion padres state"
+                        print padres[x1 - 1][y1 - 1]
+                        print "result"
+                        print result
+                        """
+                        result.append(padres[x1-1][y1-1])
+                        if padres[x1-1][y1-1] == "West":
+                            y1 = y1 + 1
+                        elif padres[x1-1][y1-1] == "East":
+                            y1 = y1 - 1
+                        elif padres[x1-1][y1-1] == "North":
+                            x1 = x1 - 1
+                        elif padres[x1-1][y1-1] == "South":
+                            x1 = x1 + 1
+
+                        state = x1, y1
+
+                    print result
+                    result.reverse()
+                    print result
+                    return result
+
 
     return []
 
+def compassAdapter(direction):
 
+    from game import Directions
+    n = Directions.NORTH
+    s = Directions.SOUTH
+    e = Directions.EAST
+    w = Directions.WEST
+
+    if direction is "North":
+        return n
+
+    if direction is "South":
+        return s
+
+    if direction is "East":
+        return e
+
+    if direction is "West":
+        return w
 
 
 def breadthFirstSearch(problem):

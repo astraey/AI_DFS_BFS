@@ -21,6 +21,9 @@ pseudocodigo dfs:
 8              for all edges from v to w in G.adjacentEdges(v) do
 9                  S.push(w)
 
+
+#idea, crear una matriz n x n con la direccion en la que hay k moverse
+    # para llegar a ese estado. así cuando lleguemos al estado final podremos hacer el traceback
 - Breathe-First Search
 Usa una Cola
 
