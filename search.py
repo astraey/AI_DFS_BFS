@@ -90,9 +90,11 @@ def depthFirstSearch(problem):
     print "Is the start a goal?", problem.isGoalState(problem.getStartState())
     print "Start's successors:", problem.getSuccessors(problem.getStartState())
     """
+
     "*** OUR CODE IS HERE ***"
     "Use The following to execute DFS"
     "python pacman.py -l tinyMaze -p SearchAgent"
+    "python pacman.py -l mediumMaze -p SearchAgent -a fn=dfs"
 
     stack = util.Stack()
     closed = []
@@ -104,26 +106,29 @@ def depthFirstSearch(problem):
         # There is nothing else in the stack.
         # In path, we find the whole way that we have gone through.
         path = stack.pop()
-
-        print "path len: ", len(path)
-        print "path: ", path
+        print "Path Lenght: ", len(path)
+        print "Path: ", path
 
         # In top_stack_node we store the last node stored in path
         top_stack_node = path[len(path) - 1]
 
         # In top_stack_state we store the state (x,y) of the last node stored in path
         top_stack_state = top_stack_node[0]
-        print "top_stack_node: ", top_stack_state
+        print "top_stack_state: ", top_stack_state
         if problem.isGoalState(top_stack_state):
-            # print "FOUND SOLUTION: ", [x[1] for x in path]
+
             return [x[1] for x in path][1:]
 
         if top_stack_state not in closed:
             closed.append(top_stack_state)
-            print "EXPLORING: ", top_stack_state
+            print "Expanded: ", top_stack_state
 
+            # Checks all of the successors and if they are not in the closed list, add them to the stack.
+            # We are expanding the node.
+            # In the Stack, we keep pushing the whole path to the solution.
             for successor in problem.getSuccessors(top_stack_state):
-                # print "SUCCESSOR: ", successor
+                print "SUCCESSOR FOUND: ", successor
+
                 if successor[0] not in closed:
 
                     # It copies the content of path in successorPath, not a reference
@@ -135,19 +140,139 @@ def depthFirstSearch(problem):
                     stack.push(successorPath)
                     # else:
                     # print successor[0], " IS ALREADY EXPLORED!!"
+
+        test = stack.pop()
+        print "Last Test", test
+        test2 = stack.pop()
+        print "Last Test", test2
+        stack.push(test2)
+        stack.push(test)
+
         print "***************************************"
+
 
     return []
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    "We can use basically the same alforithm because using a queue, the first node that we push is the first that will"
+    "Be popped, unlike the stack, where the last pushed was the first popped. This way, we expand the nodes following "
+    "the entry order. (First in first out)"
+
+    "Note, because our code has been written generically, "
+    "python pacman.py -l mediumMaze -p SearchAgent -a fn=bfs"
+
+
+    queue = util.Queue()
+    closed = []
+    queue.push([(problem.getStartState(), "Start", 1)])
+
+    while not queue.isEmpty():
+
+        # In the top of the stack, we have stored the whole queue of nodes we have gone through.
+        # There is nothing else in the stack.
+        # In path, we find the whole way that we have gone through.
+        path = queue.pop()
+        print "Path Lenght: ", len(path)
+        print "Path: ", path
+
+        # In top_stack_node we store the last node stored in path
+        top_stack_node = path[len(path) - 1]
+
+        # In top_stack_state we store the state (x,y) of the last node stored in path
+        top_stack_state = top_stack_node[0]
+        print "top_stack_state: ", top_stack_state
+        if problem.isGoalState(top_stack_state):
+
+            return [x[1] for x in path][1:]
+
+        if top_stack_state not in closed:
+            closed.append(top_stack_state)
+            print "Expanded: ", top_stack_state
+
+            # Checks all of the successors and if they are not in the closed list, add them to the stack.
+            # We are expanding the node.
+            # In the Stack, we keep pushing the whole path to the solution.
+            for successor in problem.getSuccessors(top_stack_state):
+                print "SUCCESSOR FOUND: ", successor
+
+                if successor[0] not in closed:
+
+                    # It copies the content of path in successorPath, not a reference
+                    successorPath = path[:]
+                    print "SuccesorPath: ", successorPath
+                    successorPath.append(successor)
+                    print "SuccesorPAth after: ", successorPath
+                    # print "successorPath: ", successorPath
+                    queue.push(successorPath)
+                    # else:
+                    # print successor[0], " IS ALREADY EXPLORED!!"
+
+        print "***************************************"
+
+
+    return []
+
+
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    "python pacman.py -l mediumMaze -p SearchAgent -a fn=ucs"
+    "python pacman.py -l mediumScaryMaze -p StayWestSearchAgent"
+
+    # Cost in this case is a function
+    cost = lambda aPath: problem.getCostOfActions([x[1] for x in aPath])
+
+    priority_queue = util.PriorityQueueWithFunction(cost)
+    closed = []
+    priority_queue.push([(problem.getStartState(), "Stop", 1)])
+
+    while not priority_queue.isEmpty():
+
+        # In the top of the stack, we have stored the whole queue of nodes we have gone through.
+        # There is nothing else in the stack.
+        # In path, we find the whole way that we have gone through.
+        path = priority_queue.pop()
+        print "Path Lenght: ", len(path)
+        print "Path: ", path
+
+        # In top_stack_node we store the last node stored in path
+        top_stack_node = path[len(path) - 1]
+
+        # In top_stack_state we store the state (x,y) of the last node stored in path
+        top_stack_state = top_stack_node[0]
+        print "top_stack_state: ", top_stack_state
+        if problem.isGoalState(top_stack_state):
+
+            return [x[1] for x in path][1:]
+
+        if top_stack_state not in closed:
+            closed.append(top_stack_state)
+            print "Expanded: ", top_stack_state
+
+            # Checks all of the successors and if they are not in the closed list, add them to the stack.
+            # We are expanding the node.
+            # In the Stack, we keep pushing the whole path to the solution.
+            for successor in problem.getSuccessors(top_stack_state):
+                print "SUCCESSOR FOUND: ", successor
+
+                if successor[0] not in closed:
+
+                    # It copies the content of path in successorPath, not a reference
+                    successorPath = path[:]
+                    print "SuccesorPath: ", successorPath
+                    successorPath.append(successor)
+                    print "SuccesorPAth after: ", successorPath
+                    # print "successorPath: ", successorPath
+                    priority_queue.push(successorPath)
+                    # else:
+                    # print successor[0], " IS ALREADY EXPLORED!!"
+
+        print "***************************************"
+
+
+    return []
+
 
 def nullHeuristic(state, problem=None):
     """
