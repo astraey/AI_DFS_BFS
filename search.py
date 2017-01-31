@@ -96,8 +96,44 @@ def depthFirstSearch(problem,):
     print "Start's successors:", problem.getSuccessors(problem.getStartState())
     """
     "*** OUR CODE IS HERE ***"
-    
+    """
+    procedure DFS - iterative(G, v):
+    let S be a stack
+    S.push(v)
+    while S is not empty
+        v = S.pop()
+        if v is not labeled as discovered:
+            label v as discovered
+        for all edges from v to w in G.adjacentEdges(v) do
+        S.push(w)
+    """
+    S = util.Stack()
+    visitados = []
+    S.push((problem.getStartState(), []))
+    while not S.isEmpty():
 
+        estado, padres = S.pop()
+        if estado not in visitados:
+            visitados.append(estado)
+        sucesores = problem.getSuccessors(estado)
+        for i in range(0, len(sucesores)):
+            print estado
+            if problem.isGoalState(sucesores[i][0]):
+                print "goal reached"
+                print "padres en goal"
+                print padres
+                print "ultima direccion"
+                print sucesores[i][1]
+                print padres
+
+                return padres + [sucesores[i][1]]
+            if sucesores[i][0] not in visitados:
+                print "sucesor added"
+                print sucesores[i][0]
+                print "direccion sucesores"
+                print compassAdapter(sucesores[i][1])
+                S.push((sucesores[i][0], padres + [sucesores[i][1]]))
+    return []
 
 
 def compassAdapter(direction):
