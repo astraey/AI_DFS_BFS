@@ -70,7 +70,7 @@ def tinyMazeSearch(problem):
     from game import Directions
     s = Directions.SOUTH
     w = Directions.WEST
-    return  [s, s, w, s, w, w, s, w]
+    return [s, s, w, s, w, w, s, w]
 
 def depthFirstSearch(problem):
 
@@ -138,8 +138,8 @@ def depthFirstSearch(problem):
                     print "SuccesorPAth after: ", successorPath
                     # print "successorPath: ", successorPath
                     stack.push(successorPath)
-                    # else:
-                    # print successor[0], " IS ALREADY EXPLORED!!"
+                else:
+                    print successor[0], " IS ALREADY EXPLORED!!"
 
         test = stack.pop()
         print "Last Test", test
