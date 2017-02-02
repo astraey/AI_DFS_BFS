@@ -170,21 +170,21 @@ def breadthFirstSearch(problem):
             visitados.append(estado)
         sucesores = problem.getSuccessors(estado)
         for i in range(0, len(sucesores)):
-            print estado
+            #print estado
             if problem.isGoalState(sucesores[i][0]):
-                print "goal reached"
-                print "padres en goal"
-                print padres
-                print "ultima direccion"
-                print sucesores[i][1]
-                print padres
+                #print "goal reached"
+                #print "padres en goal"
+                #print padres
+                #print "ultima direccion"
+                #print sucesores[i][1]
+                #print padres
 
                 return padres + [sucesores[i][1]]
             if sucesores[i][0] not in visitados:
-                print "sucesor added"
-                print sucesores[i][0]
-                print "direccion sucesores"
-                print compassAdapter(sucesores[i][1])
+                #print "sucesor added"
+                #print sucesores[i][0]
+                #print "direccion sucesores"
+                #print compassAdapter(sucesores[i][1])
                 S.push((sucesores[i][0], padres + [sucesores[i][1]]))
     return []
 
@@ -195,33 +195,33 @@ def uniformCostSearch(problem):
     visitados = []
     S.push((problem.getStartState(), []), 0)
     while not S.isEmpty():
-        print "S"
-        print S
+        #print "S"
+        #print S
         estado, padres = S.pop()
 
-        print "estado"
-        print estado
-        print "padres"
-        print padres
+        #print "estado"
+        #print estado
+        #print "padres"
+        #print padres
         if estado not in visitados:
             visitados.append(estado)
         sucesores = problem.getSuccessors(estado)
         for i in range(0, len(sucesores)):
-            print estado
+            #print estado
             if problem.isGoalState(sucesores[i][0]):
-                print "goal reached"
-                print "padres en goal"
-                print padres
-                print "ultima direccion"
-                print sucesores[i][1]
-                print padres
+                #print "goal reached"
+                #print "padres en goal"
+                #print padres
+                #print "ultima direccion"
+                #print sucesores[i][1]
+                #print padres
 
                 return padres + [sucesores[i][1]]
             if sucesores[i][0] not in visitados:
-                print "sucesor added"
-                print sucesores[i][0]
-                print "direccion sucesores"
-                print compassAdapter(sucesores[i][1])
+                #print "sucesor added"
+                #print sucesores[i][0]
+                #print "direccion sucesores"
+                #print compassAdapter(sucesores[i][1])
                 S.push((sucesores[i][0], padres + [sucesores[i][1]]), problem.getCostOfActions(padres + [sucesores[i][1]]))
     return []
 
@@ -237,35 +237,35 @@ def aStarSearch(problem, heuristic=nullHeuristic):
     "*** YOUR CODE HERE ***"
     S = util.PriorityQueue()
     visitados = []
-    S.push((problem.getStartState(), []), 0)
+    S.push((problem.getStartState()), 0)
     while not S.isEmpty():
-        print "S"
-        print S
+        #print "S"
+        #print S
         estado, padres = S.pop()
 
-        print "estado"
+        """print "estado"
         print estado
         print "padres"
-        print padres
+        print padres"""
         if estado not in visitados:
             visitados.append(estado)
         sucesores = problem.getSuccessors(estado)
         for i in range(0, len(sucesores)):
-            print estado
+            #print estado
             if problem.isGoalState(sucesores[i][0]):
-                print "goal reached"
+                """print "goal reached"
                 print "padres en goal"
                 print padres
                 print "ultima direccion"
                 print sucesores[i][1]
-                print padres
+                print padres"""
 
                 return padres + [sucesores[i][1]]
             if sucesores[i][0] not in visitados:
-                print "sucesor added"
+                """print "sucesor added"
                 print sucesores[i][0]
                 print "direccion sucesores"
-                print compassAdapter(sucesores[i][1])
+                print compassAdapter(sucesores[i][1])"""
                 S.push((sucesores[i][0], padres + [sucesores[i][1]]),
                        problem.getCostOfActions(padres + [sucesores[i][1]]) + heuristic(sucesores[i][0], problem))
     return []
