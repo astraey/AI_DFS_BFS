@@ -193,7 +193,7 @@ def breadthFirstSearch(problem):
                 S.push((sucesores[i][0], padres + [sucesores[i][1]]))
     return []"""
 
-    #Codigo Juan
+    # Codigo Juan, optimo para ejercicio 5
 
     queue = util.Queue()
     closed = []
