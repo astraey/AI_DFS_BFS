@@ -214,64 +214,52 @@ def breadthFirstSearch(problem):
     return []
 
 
-
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "python pacman.py -l mediumMaze -p SearchAgent -a fn=ucs"
     "python pacman.py -l mediumScaryMaze -p StayWestSearchAgent"
 
-    # Cost in this case is a function
-    cost = lambda aPath: problem.getCostOfActions([x[1] for x in aPath])
+    S = util.PriorityQueue()
+    visitados = []
+    S.push((problem.getStartState(), []), 0)
+    while not S.isEmpty():
 
-    priority_queue = util.PriorityQueueWithFunction(cost)
-    closed = []
-    priority_queue.push([(problem.getStartState(), "Stop", 1)])
+        estado, padres = S.pop()
 
-    while not priority_queue.isEmpty():
+        if estado not in visitados:
 
-        # In the top of the stack, we have stored the whole queue of nodes we have gone through.
-        # There is nothing else in the stack.
-        # In path, we find the whole way that we have gone through.
-        path = priority_queue.pop()
-        print "Path Lenght: ", len(path)
-        print "Path: ", path
+            visitados.append(estado)
+        sucesores = problem.getSuccessors(estado)
+        for i in range(0, len(sucesores)):
 
-        # In top_stack_node we store the last node stored in path
-        top_stack_node = path[len(path) - 1]
+            if problem.isGoalState(sucesores[i][0]):
 
-        # In top_stack_state we store the state (x,y) of the last node stored in path
-        top_stack_state = top_stack_node[0]
-        print "top_stack_state: ", top_stack_state
-        if problem.isGoalState(top_stack_state):
+                return padres + [sucesores[i][1]]
 
-            return [x[1] for x in path][1:]
-
-        if top_stack_state not in closed:
-            closed.append(top_stack_state)
-            print "Expanded: ", top_stack_state
-
-            # Checks all of the successors and if they are not in the closed list, add them to the stack.
-            # We are expanding the node.
-            # In the Stack, we keep pushing the whole path to the solution.
-            for successor in problem.getSuccessors(top_stack_state):
-                print "SUCCESSOR FOUND: ", successor
-
-                if successor[0] not in closed:
-
-                    # It copies the content of path in successorPath, not a reference
-                    successorPath = path[:]
-                    print "SuccesorPath: ", successorPath
-                    successorPath.append(successor)
-                    print "SuccesorPAth after: ", successorPath
-                    # print "successorPath: ", successorPath
-                    priority_queue.push(successorPath)
-                    # else:
-                    # print successor[0], " IS ALREADY EXPLORED!!"
-
-        print "***************************************"
-
-
+            if sucesores[i][0] not in visitados:
+                print "sucesores: ",sucesores[i][0], " padres + sucesores: ", padres + [sucesores[i][1]], "Coste: ",problem.getCostOfActions(padres + [sucesores[i][1]])
+                S.push((sucesores[i][0], padres + [sucesores[i][1]]), problem.getCostOfActions(padres + [sucesores[i][1]]))
     return []
+
+
+def compassAdapter(direction):
+    from game import Directions
+    n = Directions.NORTH
+    s = Directions.SOUTH
+    e = Directions.EAST
+    w = Directions.WEST
+
+    if direction is "North":
+        return n
+
+    if direction is "South":
+        return s
+
+    if direction is "East":
+        return e
+
+    if direction is "West":
+        return w
 
 
 def nullHeuristic(state, problem=None):
@@ -283,8 +271,40 @@ def nullHeuristic(state, problem=None):
 
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    S = util.PriorityQueue()
+    visitados = []
+    S.push((problem.getStartState(), []), 0)
+    while not S.isEmpty():
+        print "S"
+        print S
+        estado, padres = S.pop()
+
+        print "estado"
+        print estado
+        print "padres"
+        print padres
+        if estado not in visitados:
+            visitados.append(estado)
+        sucesores = problem.getSuccessors(estado)
+        for i in range(0, len(sucesores)):
+            print estado
+            if problem.isGoalState(sucesores[i][0]):
+                print "goal reached"
+                print "padres en goal"
+                print padres
+                print "ultima direccion"
+                print sucesores[i][1]
+                print padres
+
+                return padres + [sucesores[i][1]]
+            if sucesores[i][0] not in visitados:
+                print "sucesor added"
+                print sucesores[i][0]
+                print "direccion sucesores"
+                print compassAdapter(sucesores[i][1])
+                S.push((sucesores[i][0], padres + [sucesores[i][1]]),
+                       problem.getCostOfActions(padres + [sucesores[i][1]]) + heuristic(sucesores[i][0], problem))
+    return []
 
 
 # Abbreviations
