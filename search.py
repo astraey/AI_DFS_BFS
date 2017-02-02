@@ -70,7 +70,7 @@ def tinyMazeSearch(problem):
     from game import Directions
     s = Directions.SOUTH
     w = Directions.WEST
-    return  [s, s, w, s, w, w, s, w]
+    return [s, s, w, s, w, w, s, w]
 
 def depthFirstSearch(problem,):
 
@@ -95,7 +95,9 @@ def depthFirstSearch(problem,):
     print "Is the start a goal?", problem.isGoalState(problem.getStartState())
     print "Start's successors:", problem.getSuccessors(problem.getStartState())
     """
+
     "*** OUR CODE IS HERE ***"
+
     """
     procedure DFS - iterative(G, v):
     let S be a stack
@@ -236,6 +238,7 @@ def breadthFirstSearch(problem):
                     successorPath.append(successor)
                     print "SuccesorPAth after: ", successorPath
                     # print "successorPath: ", successorPath
+
                     queue.push(successorPath)
                     # else:
                     # print successor[0], " IS ALREADY EXPLORED!!"
@@ -243,17 +246,17 @@ def breadthFirstSearch(problem):
         print "***************************************"
 
 
+        print "***************************************"
+
     return []
 
+    return []
 
-
-def uniformCostSearch(problem):
-    """Search the node of least total cost first."""
-    "*** YOUR CODE HERE ***"
     S = util.PriorityQueue()
     visitados = []
     S.push((problem.getStartState(), []), 0)
     while not S.isEmpty():
+
         print "S"
         print S
         estado, padres = S.pop()
@@ -285,6 +288,7 @@ def uniformCostSearch(problem):
                 print "Cost of pushed Thing: ", problem.getCostOfActions(padres + [sucesores[i][1]])
     return []
 
+
 def nullHeuristic(state, problem=None):
     """
     A heuristic function estimates the cost from the current state to the nearest
@@ -294,7 +298,9 @@ def nullHeuristic(state, problem=None):
 
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
+
     "*** YOUR CODE HERE ***"
+
     S = util.PriorityQueue()
     visitados = []
     S.push((problem.getStartState(), []), 0)
