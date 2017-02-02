@@ -158,9 +158,14 @@ def compassAdapter(direction):
 
 
 def breadthFirstSearch(problem):
+
+
+
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-    S = util.Queue()
+
+    # Codigo Joan
+    """S = util.Queue()
     visitados = []
     S.push((problem.getStartState(), []))
     while not S.isEmpty():
@@ -186,7 +191,61 @@ def breadthFirstSearch(problem):
                 print "direccion sucesores"
                 print compassAdapter(sucesores[i][1])
                 S.push((sucesores[i][0], padres + [sucesores[i][1]]))
+    return []"""
+
+    #Codigo Juan
+
+    queue = util.Queue()
+    closed = []
+    queue.push([(problem.getStartState(), "Start", 1)])
+
+    while not queue.isEmpty():
+
+        # In the top of the stack, we have stored the whole queue of nodes we have gone through.
+        # There is nothing else in the stack.
+        # In path, we find the whole way that we have gone through.
+        path = queue.pop()
+        print "Path Lenght: ", len(path)
+        print "Path: ", path
+
+        # In top_stack_node we store the last node stored in path
+        top_stack_node = path[len(path) - 1]
+
+        # In top_stack_state we store the state (x,y) of the last node stored in path
+        top_stack_state = top_stack_node[0]
+        print "top_stack_state: ", top_stack_state
+        if problem.isGoalState(top_stack_state):
+
+            return [x[1] for x in path][1:]
+
+        if top_stack_state not in closed:
+            closed.append(top_stack_state)
+            print "Expanded: ", top_stack_state
+
+            # Checks all of the successors and if they are not in the closed list, add them to the stack.
+            # We are expanding the node.
+            # In the Stack, we keep pushing the whole path to the solution.
+            for successor in problem.getSuccessors(top_stack_state):
+                print "SUCCESSOR FOUND: ", successor
+
+                if successor[0] not in closed:
+
+                    # It copies the content of path in successorPath, not a reference
+                    successorPath = path[:]
+                    print "SuccesorPath: ", successorPath
+                    successorPath.append(successor)
+                    print "SuccesorPAth after: ", successorPath
+                    # print "successorPath: ", successorPath
+                    queue.push(successorPath)
+                    # else:
+                    # print successor[0], " IS ALREADY EXPLORED!!"
+
+        print "***************************************"
+
+
     return []
+
+
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
@@ -223,6 +282,7 @@ def uniformCostSearch(problem):
                 print "direccion sucesores"
                 print compassAdapter(sucesores[i][1])
                 S.push((sucesores[i][0], padres + [sucesores[i][1]]), problem.getCostOfActions(padres + [sucesores[i][1]]))
+                print "Cost of pushed Thing: ", problem.getCostOfActions(padres + [sucesores[i][1]])
     return []
 
 def nullHeuristic(state, problem=None):
