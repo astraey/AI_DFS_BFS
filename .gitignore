@@ -5,6 +5,7 @@ __pycache__/
 
 # C extensions
 *.so
+*.lay
 
 # Distribution / packaging
 .Python
@@ -91,3 +92,5 @@ ENV/
 *.xml
 
 *.iml
+*.lay
+*.lay

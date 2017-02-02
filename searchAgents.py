@@ -303,8 +303,11 @@ class CornersProblem(search.SearchProblem):
         Returns whether this search state is a goal state of the problem.
         """
         "*** YOUR CODE HERE ***"
-        print "MY NUM", len(state[1])
-        return len(state[1]) == 0
+
+        if len(state[1]) == 0:
+            return True
+        else:
+            return False
 
     def getSuccessors(self, state):
         """
@@ -330,8 +333,10 @@ class CornersProblem(search.SearchProblem):
             dx, dy = Actions.directionToVector(action)
             nextx, nexty = int(x + dx), int(y + dy)
             hitsWall = self.walls[nextx][nexty]
+
             if not self.walls[nextx][nexty]:
                 nextPosition = (nextx, nexty)
+
                 cornersLeft = state[1][:]
                 if nextPosition in cornersLeft:
                     cornersLeft.remove(nextPosition)
@@ -374,7 +379,9 @@ def cornersHeuristic(state, problem):
     walls = problem.walls # These are the walls of the maze, as a Grid (game.py)
 
     "*** YOUR CODE HERE ***"
-    return 0 # Default to trivial solution
+
+    return 0
+
 
 class AStarCornersAgent(SearchAgent):
     "A SearchAgent for FoodSearchProblem using A* and your foodHeuristic"

@@ -70,7 +70,7 @@ def tinyMazeSearch(problem):
     from game import Directions
     s = Directions.SOUTH
     w = Directions.WEST
-    return [s, s, w, s, w, w, s, w]
+    return  [s, s, w, s, w, w, s, w]
 
 def depthFirstSearch(problem,):
 
@@ -95,9 +95,7 @@ def depthFirstSearch(problem,):
     print "Is the start a goal?", problem.isGoalState(problem.getStartState())
     print "Start's successors:", problem.getSuccessors(problem.getStartState())
     """
-
     "*** OUR CODE IS HERE ***"
-
     """
     procedure DFS - iterative(G, v):
     let S be a stack
@@ -238,7 +236,6 @@ def breadthFirstSearch(problem):
                     successorPath.append(successor)
                     print "SuccesorPAth after: ", successorPath
                     # print "successorPath: ", successorPath
-
                     queue.push(successorPath)
                     # else:
                     # print successor[0], " IS ALREADY EXPLORED!!"
@@ -246,48 +243,47 @@ def breadthFirstSearch(problem):
         print "***************************************"
 
 
-        print "***************************************"
-
     return []
 
-    return []
 
+
+def uniformCostSearch(problem):
+    """Search the node of least total cost first."""
+    "*** YOUR CODE HERE ***"
     S = util.PriorityQueue()
     visitados = []
     S.push((problem.getStartState(), []), 0)
     while not S.isEmpty():
-
-        print "S"
-        print S
+        # print "S"
+        # print S
         estado, padres = S.pop()
 
-        print "estado"
-        print estado
-        print "padres"
-        print padres
+        # print "estado"
+        # print estado
+        # print "padres"
+        # print padres
         if estado not in visitados:
             visitados.append(estado)
         sucesores = problem.getSuccessors(estado)
         for i in range(0, len(sucesores)):
-            print estado
+            # print estado
             if problem.isGoalState(sucesores[i][0]):
-                print "goal reached"
-                print "padres en goal"
-                print padres
-                print "ultima direccion"
-                print sucesores[i][1]
-                print padres
+                # print "goal reached"
+                # print "padres en goal"
+                # print padres
+                # print "ultima direccion"
+                # print sucesores[i][1]
+                # print padres
 
                 return padres + [sucesores[i][1]]
             if sucesores[i][0] not in visitados:
-                print "sucesor added"
-                print sucesores[i][0]
-                print "direccion sucesores"
-                print compassAdapter(sucesores[i][1])
+                # print "sucesor added"
+                # print sucesores[i][0]
+                # print "direccion sucesores"
+                # print compassAdapter(sucesores[i][1])
                 S.push((sucesores[i][0], padres + [sucesores[i][1]]), problem.getCostOfActions(padres + [sucesores[i][1]]))
-                print "Cost of pushed Thing: ", problem.getCostOfActions(padres + [sucesores[i][1]])
+                # print "Cost of pushed Thing: ", problem.getCostOfActions(padres + [sucesores[i][1]])
     return []
-
 
 def nullHeuristic(state, problem=None):
     """
@@ -298,9 +294,7 @@ def nullHeuristic(state, problem=None):
 
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
-
     "*** YOUR CODE HERE ***"
-
     S = util.PriorityQueue()
     visitados = []
     S.push((problem.getStartState(), []), 0)
