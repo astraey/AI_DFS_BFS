@@ -113,25 +113,26 @@ def depthFirstSearch(problem,):
     while not S.isEmpty():
 
         estado, padres = S.pop()
+        if problem.isGoalState(estado):
+            """print "goal reached"
+            print "padres en goal"
+            print padres
+            print "ultima direccion"
+            print sucesores[i][1]
+            print padres"""
+
+            return padres
         if estado not in visitados:
             visitados.append(estado)
         sucesores = problem.getSuccessors(estado)
         for i in range(0, len(sucesores)):
-            print estado
-            if problem.isGoalState(sucesores[i][0]):
-                print "goal reached"
-                print "padres en goal"
-                print padres
-                print "ultima direccion"
-                print sucesores[i][1]
-                print padres
+            #print estado
 
-                return padres + [sucesores[i][1]]
             if sucesores[i][0] not in visitados:
-                print "sucesor added"
+                """print "sucesor added"
                 print sucesores[i][0]
                 print "direccion sucesores"
-                print compassAdapter(sucesores[i][1])
+                print compassAdapter(sucesores[i][1])"""
                 S.push((sucesores[i][0], padres + [sucesores[i][1]]))
     return []
 
@@ -164,32 +165,24 @@ def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
 
-    
+
     S = util.Queue()
     visitados = []
     S.push((problem.getStartState(), []))
     while not S.isEmpty():
 
         estado, padres = S.pop()
+
         if estado not in visitados:
             visitados.append(estado)
-        sucesores = problem.getSuccessors(estado)
+            if problem.isGoalState(estado):
+                return padres
+            sucesores = problem.getSuccessors(estado)
         for i in range(0, len(sucesores)):
-            print estado
-            if problem.isGoalState(sucesores[i][0]):
-                print "goal reached"
-                print "padres en goal"
-                print padres
-                print "ultima direccion"
-                print sucesores[i][1]
-                print padres
 
-                return padres + [sucesores[i][1]]
+
             if sucesores[i][0] not in visitados:
-                print "sucesor added"
-                print sucesores[i][0]
-                print "direccion sucesores"
-                print compassAdapter(sucesores[i][1])
+
                 S.push((sucesores[i][0], padres + [sucesores[i][1]]))
     return []
 
@@ -204,35 +197,20 @@ def uniformCostSearch(problem):
     visitados = []
     S.push((problem.getStartState(), []), 0)
     while not S.isEmpty():
-        # print "S"
-        # print S
+
         estado, padres = S.pop()
 
-        # print "estado"
-        # print estado
-        # print "padres"
-        # print padres
         if estado not in visitados:
             visitados.append(estado)
-        sucesores = problem.getSuccessors(estado)
-        for i in range(0, len(sucesores)):
-            # print estado
-            if problem.isGoalState(sucesores[i][0]):
-                # print "goal reached"
-                # print "padres en goal"
-                # print padres
-                # print "ultima direccion"
-                # print sucesores[i][1]
-                # print padres
+            if problem.isGoalState(estado):
+                return padres
+            sucesores = problem.getSuccessors(estado)
+            for i in range(0, len(sucesores)):
 
-                return padres + [sucesores[i][1]]
-            if sucesores[i][0] not in visitados:
-                # print "sucesor added"
-                # print sucesores[i][0]
-                # print "direccion sucesores"
-                # print compassAdapter(sucesores[i][1])
-                S.push((sucesores[i][0], padres + [sucesores[i][1]]), problem.getCostOfActions(padres + [sucesores[i][1]]))
-                # print "Cost of pushed Thing: ", problem.getCostOfActions(padres + [sucesores[i][1]])
+                if sucesores[i][0] not in visitados:
+
+
+                    S.push((sucesores[i][0], padres + [sucesores[i][1]]), problem.getCostOfActions(padres + [sucesores[i][1]]))
     return []
 
 def nullHeuristic(state, problem=None):
@@ -249,34 +227,22 @@ def aStarSearch(problem, heuristic=nullHeuristic):
     visitados = []
     S.push((problem.getStartState(), []), 0)
     while not S.isEmpty():
-        print "S"
-        print S
+
         estado, padres = S.pop()
 
-        print "estado"
-        print estado
-        print "padres"
-        print padres
+
         if estado not in visitados:
             visitados.append(estado)
-        sucesores = problem.getSuccessors(estado)
-        for i in range(0, len(sucesores)):
-            print estado
-            if problem.isGoalState(sucesores[i][0]):
-                print "goal reached"
-                print "padres en goal"
-                print padres
-                print "ultima direccion"
-                print sucesores[i][1]
-                print padres
 
-                return padres + [sucesores[i][1]]
-            if sucesores[i][0] not in visitados:
-                print "sucesor added"
-                print sucesores[i][0]
-                print "direccion sucesores"
-                print compassAdapter(sucesores[i][1])
-                S.push((sucesores[i][0], padres + [sucesores[i][1]]),
+            if problem.isGoalState(estado):
+                return padres
+            sucesores = problem.getSuccessors(estado)
+            for i in range(0, len(sucesores)):
+
+
+                if sucesores[i][0] not in visitados:
+
+                    S.push((sucesores[i][0], padres + [sucesores[i][1]]),
                        problem.getCostOfActions(padres + [sucesores[i][1]]) + heuristic(sucesores[i][0], problem))
     return []
 
