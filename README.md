@@ -1,6 +1,6 @@
 <h1>DFS and BFS implementation :ocean:</h1>
 
-<p>Base Code from Berkley Artificial Intelligence Course.</p> 
+<p>Base Code from the Berkley Artificial Intelligence Course.</p> 
 
 <p>To run the program, you just need to execute the following command:</p>
 
